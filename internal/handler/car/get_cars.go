@@ -6,6 +6,20 @@ import (
 	"net/http"
 )
 
+// Cars
+// @Summary Cars
+// @Tags car
+// @Description get cars by filter with pagination and offset
+// @Accept json
+// @Produce json
+// @Param model query string false "model"
+// @Param mark query string false "mark"
+// @Param year query int false "year"
+// @Param limit query int false "limit"
+// @Param offset query int false "offset"
+// @Success 200 {array} models.Car "Cars"
+// @Failure 404 {string} string "no content by this filter"
+// @Router /cars [get]
 func Cars(cg carGetter) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		var car models.Car

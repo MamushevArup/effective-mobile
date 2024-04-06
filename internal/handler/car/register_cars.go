@@ -15,6 +15,16 @@ type Req struct {
 	RegNum string `json:"regNum"`
 }
 
+// JoinCars
+// @Summary JoinCars
+// @Tags car
+// @Description add cars as array
+// @Accept json
+// @Produce json
+// @Param validateRegNums body models.RegNumsReq true "RegNums"
+// @Success 200 {string} string "Cars added successfully"
+// @Failure 500 {string} string "error"
+// @Router /add-car [post]
 func JoinCars(cc carCreator) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		validatedRegNums := c.MustGet("validatedRegNums").(models.RegNumsReq)

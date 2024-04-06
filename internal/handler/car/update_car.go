@@ -6,6 +6,16 @@ import (
 	"net/http"
 )
 
+// UpdateCar
+// @Summary UpdateCar
+// @Tags car
+// @Description update car by any filter except regNum
+// @Accept json
+// @Produce json
+// @Param number path string true "number"
+// @Success 200 {string} string "Car updated successfully"
+// @Failure 500 {string} string "error"
+// @Router /update-car/{number} [patch]
 func UpdateCar(cu carUpdater) gin.HandlerFunc {
 	return func(c *gin.Context) {
 

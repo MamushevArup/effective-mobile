@@ -9,10 +9,19 @@ import (
 	"github.com/MamushevArup/test-effective-mob/pkg/psql"
 	"github.com/jackc/pgx/v5/pgxpool"
 	"github.com/joho/godotenv"
+	"github.com/sirupsen/logrus"
 	"log"
+	"net/http"
 	"os"
+	"os/signal"
+	"syscall"
 )
 
+// @title Car API
+// @version 3.0
+// @description Api related to the cars
+// @host localhost:3301
+// @BasePath /
 func main() {
 	if err := godotenv.Load(); err != nil {
 		log.Fatalf("error loading .env file %v\n", err)
@@ -34,14 +43,29 @@ func main() {
 	svc := serviceCar.New(carsRepo)
 
 	hdl := handler.New(svc)
+
+	server := &http.Server{
+		Addr:    ":" + os.Getenv("SERVER_PORT"),
+		Handler: hdl.InitRoutes(),
+	}
+
 	lg.Info("server started")
+
 	go func() {
-		if err := hdl.InitRoutes().Run(":" + os.Getenv("SERVER_PORT")); err != nil {
+		if err := server.ListenAndServe(); err != nil {
 			lg.Fatalf("error running server %v", err)
 		}
 	}()
 
-	select {}
+	quit := make(chan os.Signal, 1)
+	signal.Notify(quit, syscall.SIGTERM, syscall.SIGINT)
+	<-quit
+
+	lg.Print("Application Shutting Down")
+
+	if err := server.Shutdown(context.Background()); err != nil {
+		logrus.Errorf("error occured on server shutting down: %s", err.Error())
+	}
 }
 
 func storageInit(ctx context.Context, lg *logger.Logger) *pgxpool.Pool {

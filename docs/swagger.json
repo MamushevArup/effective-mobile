@@ -1,0 +1,240 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "Api related to the cars",
+        "title": "Car API",
+        "contact": {},
+        "version": "3.0"
+    },
+    "host": "localhost:3301",
+    "basePath": "/",
+    "paths": {
+        "/add-car": {
+            "post": {
+                "description": "add cars as array",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "car"
+                ],
+                "summary": "JoinCars",
+                "parameters": [
+                    {
+                        "description": "RegNums",
+                        "name": "validateRegNums",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.RegNumsReq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Cars added successfully",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "500": {
+                        "description": "error",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/cars": {
+            "get": {
+                "description": "get cars by filter with pagination and offset",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "car"
+                ],
+                "summary": "Cars",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "model",
+                        "name": "model",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "mark",
+                        "name": "mark",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "year",
+                        "name": "year",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "limit",
+                        "name": "limit",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "offset",
+                        "name": "offset",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Cars",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/models.Car"
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "no content by this filter",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/delete-car/{number}": {
+            "delete": {
+                "description": "delete car by regNum",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "car"
+                ],
+                "summary": "DeleteCar",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "number",
+                        "name": "number",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Car removed successfully",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "500": {
+                        "description": "error",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/update-car/{number}": {
+            "patch": {
+                "description": "update car by any filter except regNum",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "car"
+                ],
+                "summary": "UpdateCar",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "number",
+                        "name": "number",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Car updated successfully",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "500": {
+                        "description": "error",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "models.Car": {
+            "type": "object",
+            "properties": {
+                "mark": {
+                    "type": "string"
+                },
+                "model": {
+                    "type": "string"
+                },
+                "owner": {
+                    "$ref": "#/definitions/models.Owner"
+                },
+                "regNum": {
+                    "type": "string"
+                },
+                "year": {
+                    "type": "integer"
+                }
+            }
+        },
+        "models.Owner": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "patronymic": {
+                    "type": "string"
+                },
+                "surname": {
+                    "type": "string"
+                }
+            }
+        },
+        "models.RegNumsReq": {
+            "type": "object",
+            "properties": {
+                "reg_nums": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            }
+        }
+    }
+}

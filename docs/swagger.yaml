@@ -1,0 +1,157 @@
+basePath: /
+definitions:
+  models.Car:
+    properties:
+      mark:
+        type: string
+      model:
+        type: string
+      owner:
+        $ref: '#/definitions/models.Owner'
+      regNum:
+        type: string
+      year:
+        type: integer
+    type: object
+  models.Owner:
+    properties:
+      name:
+        type: string
+      patronymic:
+        type: string
+      surname:
+        type: string
+    type: object
+  models.RegNumsReq:
+    properties:
+      reg_nums:
+        items:
+          type: string
+        type: array
+    type: object
+host: localhost:3301
+info:
+  contact: {}
+  description: Api related to the cars
+  title: Car API
+  version: "3.0"
+paths:
+  /add-car:
+    post:
+      consumes:
+      - application/json
+      description: add cars as array
+      parameters:
+      - description: RegNums
+        in: body
+        name: validateRegNums
+        required: true
+        schema:
+          $ref: '#/definitions/models.RegNumsReq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Cars added successfully
+          schema:
+            type: string
+        "500":
+          description: error
+          schema:
+            type: string
+      summary: JoinCars
+      tags:
+      - car
+  /cars:
+    get:
+      consumes:
+      - application/json
+      description: get cars by filter with pagination and offset
+      parameters:
+      - description: model
+        in: query
+        name: model
+        type: string
+      - description: mark
+        in: query
+        name: mark
+        type: string
+      - description: year
+        in: query
+        name: year
+        type: integer
+      - description: limit
+        in: query
+        name: limit
+        type: integer
+      - description: offset
+        in: query
+        name: offset
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Cars
+          schema:
+            items:
+              $ref: '#/definitions/models.Car'
+            type: array
+        "404":
+          description: no content by this filter
+          schema:
+            type: string
+      summary: Cars
+      tags:
+      - car
+  /delete-car/{number}:
+    delete:
+      consumes:
+      - application/json
+      description: delete car by regNum
+      parameters:
+      - description: number
+        in: path
+        name: number
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Car removed successfully
+          schema:
+            type: string
+        "500":
+          description: error
+          schema:
+            type: string
+      summary: DeleteCar
+      tags:
+      - car
+  /update-car/{number}:
+    patch:
+      consumes:
+      - application/json
+      description: update car by any filter except regNum
+      parameters:
+      - description: number
+        in: path
+        name: number
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Car updated successfully
+          schema:
+            type: string
+        "500":
+          description: error
+          schema:
+            type: string
+      summary: UpdateCar
+      tags:
+      - car
+swagger: "2.0"
