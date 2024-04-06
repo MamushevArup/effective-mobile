@@ -9,6 +9,11 @@ type carManager interface {
 	inserter
 	deleter
 	updater
+	getter
+}
+
+type getter interface {
+	Cars(ctx context.Context, car models.Car, limit, offset int) ([]models.Car, error)
 }
 
 type inserter interface {

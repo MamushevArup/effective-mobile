@@ -23,6 +23,7 @@ func (h *Handler) InitRoutes() *gin.Engine {
 	router.POST("/add-car", numbers.ValidateRegistration(), car.JoinCars(h.carsUseCase))
 	router.DELETE("/delete-car/:number", numbers.ValidateRegNum(), car.DeleteCar(h.carsUseCase))
 	router.PATCH("/update-car/:number", numbers.ValidateRegNum(), car.UpdateCar(h.carsUseCase))
+	router.GET("/cars", car.Cars(h.carsUseCase))
 
 	return router
 }

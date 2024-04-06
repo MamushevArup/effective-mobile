@@ -16,3 +16,7 @@ type carRemover interface {
 type carUpdater interface {
 	UpdateCar(ctx context.Context, regNum string, car *models.Car) error
 }
+
+type carGetter interface {
+	GetCars(ctx context.Context, car models.Car, limit, offset int) ([]models.Car, error)
+}
