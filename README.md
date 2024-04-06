@@ -17,7 +17,7 @@ Before running the project, ensure you have the following dependencies installed
 1. **Migration**
 If you have goose installed then
 ```
-goose -dir ./schema "postgres://<username>:<password>@<host>:<port>/<dbname>"
+goose -dir ./schema "postgres://<username>:<password>@<host>:<port>/<dbname>" up
 ```
 ## Please paste the data which actual for you.
 
