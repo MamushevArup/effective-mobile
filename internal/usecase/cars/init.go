@@ -1,11 +1,11 @@
 package cars
 
-type Service struct {
-	carRepo inserter
+type UseCase struct {
+	carManager carManager
 }
 
-func New(i inserter) *Service {
-	return &Service{
-		carRepo: i,
+func New(c carManager) *UseCase {
+	return &UseCase{
+		carManager: c,
 	}
 }

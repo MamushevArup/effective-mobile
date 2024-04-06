@@ -1,11 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="cars@localhost" uuid="04fa47ec-f583-404f-8431-3bab90e3853b">
+    <data-source source="LOCAL" name="PostgreSQL" uuid="04fa47ec-f583-404f-8431-3bab90e3853b">
       <driver-ref>postgresql</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
-      <jdbc-url>jdbc:postgresql://localhost:5432/cars</jdbc-url>
+      <jdbc-url>postgres://postgres:Cicada_3301@localhost:5432/cars?ssmode=disable</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
+    <data-source source="LOCAL" name="PostgreSQL [2]" uuid="df98623c-6c08-4daf-8b4b-d6105203c330">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <configured-by-url>true</configured-by-url>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>postgres://postgres:Cicada_3301@localhost:5432/cars?ssmode=disable</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
   </component>

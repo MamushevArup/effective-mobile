@@ -3,10 +3,11 @@ package models
 import "github.com/google/uuid"
 
 type Car struct {
-	RegNum string `json:"regNums" db:"registration_number"`
-	Mark   string `json:"mark" db:"mark"`
-	Model  string `json:"model" db:"model"`
-	Owner  Owner
+	RegNum string `json:"regNum" db:"registration_number"`
+	Mark   string `json:"mark,omitempty" db:"mark"`
+	Model  string `json:"model,omitempty" db:"model"`
+	Year   int    `json:"year,omitempty" db:"year"`
+	Owner  Owner  `json:"owner,omitempty"`
 }
 
 type RegNumsReq struct {
@@ -14,8 +15,8 @@ type RegNumsReq struct {
 }
 
 type Owner struct {
-	Id         uuid.UUID `json:"id" db:"id"`
-	Name       string    `json:"name" db:"name"`
-	Surname    string    `json:"surname" db:"surname"`
-	Patronymic string    `json:"patronymic" db:"patronymic"`
+	Id         uuid.UUID `json:"-,omitempty" db:"id"`
+	Name       string    `json:"name,omitempty" db:"name"`
+	Surname    string    `json:"surname,omitempty" db:"surname"`
+	Patronymic string    `json:"patronymic,omitempty" db:"patronymic"`
 }

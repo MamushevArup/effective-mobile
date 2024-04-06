@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"github.com/MamushevArup/test-effective-mob/internal/handler"
 	"github.com/MamushevArup/test-effective-mob/internal/repo/cars"
 	serviceCar "github.com/MamushevArup/test-effective-mob/internal/usecase/cars"
 	"github.com/MamushevArup/test-effective-mob/pkg/logger"
@@ -24,6 +25,7 @@ func main() {
 	lg := logger.NewLogger()
 
 	db := storageInit(ctx, lg)
+	defer db.Close()
 
 	lg.Info("connected to the database successfully")
 
@@ -31,6 +33,15 @@ func main() {
 
 	svc := serviceCar.New(carsRepo)
 
+	hdl := handler.New(svc)
+	lg.Info("server started")
+	go func() {
+		if err := hdl.InitRoutes().Run(":" + os.Getenv("SERVER_PORT")); err != nil {
+			lg.Fatalf("error running server %v", err)
+		}
+	}()
+
+	select {}
 }
 
 func storageInit(ctx context.Context, lg *logger.Logger) *pgxpool.Pool {
@@ -44,6 +55,5 @@ func storageInit(ctx context.Context, lg *logger.Logger) *pgxpool.Pool {
 	if err != nil {
 		lg.Fatalf(err.Error())
 	}
-	defer connector.Close()
 	return connector
 }
